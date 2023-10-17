@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectSpawner : MonoBehaviour
-{
+public class ObjectSpawner : MonoBehaviour {
     public List<GameObject> objectPrefabs;  // Lista de objetos prefabricados
     public float spawnInterval = 2.0f;    // Intervalo de generación
     public float spawnDelay = 2.0f;       // Retraso inicial
@@ -44,7 +43,7 @@ public class ObjectSpawner : MonoBehaviour
         var errorRange  = 5;
 
         Vector3 spawnPosition = mainCamera.ViewportToWorldPoint(new Vector3(spawnX, 1, 0));
-		spawnPosition.y = this.transform.position.y - errorRange;
+        spawnPosition.y = this.transform.position.y - errorRange;
         spawnPosition.z = 0;
 
         GameObject obj = Instantiate(objectPrefabs[randomIndex], spawnPosition, Quaternion.identity, this.transform);
