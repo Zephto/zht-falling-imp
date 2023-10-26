@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
-public class ObjectMovement : MonoBehaviour {
+public class ObjectController : MonoBehaviour {
+
+	public enum Type{
+		OBSTACLE_FIRE,
+		COLLECTABLE
+	}
 
 	#region Private variables
 	private Camera mainCamera;
