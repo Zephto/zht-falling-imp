@@ -2,17 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using MyBox;
+using System.ComponentModel;
 
 public class ObjectController : MonoBehaviour {
 
 	public enum Type{
-		OBSTACLE_FIRE,
-		COLLECTABLE
+		OBSTACLE,
+		COIN
 	}
+
+	#region Public variables
+	public Type objectType;
+	#endregion
 
 	#region Private variables
 	private Camera mainCamera;
 	private float finalPosition;
+	private Tweener moveTween;
 	#endregion
 
 	private void Awake() {
@@ -24,9 +31,14 @@ public class ObjectController : MonoBehaviour {
 		//Obtain upper border of the screen
 		var errorRange = 5;
 
-		this.transform.DOMoveY(finalPosition + errorRange, 5f).SetEase(Ease.InCubic).OnComplete(()=>{
+		moveTween = this.transform.DOMoveY(finalPosition + errorRange, 5f).SetEase(Ease.InCubic).OnComplete(()=>{
 			this.gameObject.SetActive(false);
 		});
+	}
+
+	private void OnTriggerEnter2D(Collider2D other) {
+		moveTween.Kill();
+		this.gameObject.SetActive(false);
 	}
 
 }
