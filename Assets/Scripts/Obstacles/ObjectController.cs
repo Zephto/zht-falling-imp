@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using MyBox;
-using System.ComponentModel;
+using Unity.Mathematics;
 
+[RequireComponent(typeof(BoxCollider2D))]
 public class ObjectController : MonoBehaviour {
 
 	public enum Type{
@@ -14,6 +15,7 @@ public class ObjectController : MonoBehaviour {
 
 	#region Public variables
 	public Type objectType;
+	[SerializeField] private GameObject particles;
 	#endregion
 
 	#region Private variables
@@ -37,6 +39,7 @@ public class ObjectController : MonoBehaviour {
 	}
 
 	private void OnTriggerEnter2D(Collider2D other) {
+		Instantiate(particles, this.transform.position, quaternion.identity, this.transform.parent);
 		moveTween.Kill();
 		this.gameObject.SetActive(false);
 	}
