@@ -11,12 +11,14 @@ public class ObjectSpawner : MonoBehaviour {
     private List<GameObject> objects;      // Lista de objetos generados
     private float timer;
     private Camera mainCamera;
+    private bool canSpawn;
 
     private void Start()
     {
         objects = new List<GameObject>();
         timer = spawnDelay;
         mainCamera = Camera.main;
+        canSpawn = false;
 
         //Move Spawner to bottom of the screen
         var screenPosition  = new Vector3(Screen.width/2, 0, mainCamera.nearClipPlane);
@@ -27,6 +29,8 @@ public class ObjectSpawner : MonoBehaviour {
     }
 
     private void Update() {
+        if(!canSpawn) return;
+
         timer -= Time.deltaTime;
         if (timer <= 0)
         {
@@ -45,7 +49,6 @@ public class ObjectSpawner : MonoBehaviour {
 
         if(objects.Count > 10){
             //Pool existing objects
-
             var inactiveObjects = objects.Where(obj => !obj.activeSelf).ToList();
             if(inactiveObjects.Count > 0){
 
@@ -58,7 +61,6 @@ public class ObjectSpawner : MonoBehaviour {
             }else{
                 Debug.LogError("There is no more active objects!!!");
             }
-
 
         }else{
             //Create new objects
