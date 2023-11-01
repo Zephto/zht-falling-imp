@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+/// <summary>
+/// Component used to spawn objects (obstacles and collectables)
+/// </summary>
 public class ObjectSpawner : MonoBehaviour {
     public GameObject objectPrefab;  // Lista de objetos prefabricados
     public float spawnInterval = 2.0f;    // Intervalo de generación

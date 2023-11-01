@@ -10,7 +10,9 @@ using UnityEngine;
 public class GameController : MonoBehaviour {
 	
 	#region Class references
+	/// <inheritdoc cref="GameplayHud"/>
 	private GameplayHud _hud;
+	/// <inheritdoc cref="ObjectSpawner"/>
 	private ObjectSpawner _spawner;
 	#endregion
 
@@ -20,7 +22,7 @@ public class GameController : MonoBehaviour {
 	private float speedIncrement;
 	private float currentScore;
 	private float spawnTime;
-	private float currentTime;
+	private float currentGameTime;
 	private bool isGameStarted;
 	#endregion
 
@@ -31,13 +33,12 @@ public class GameController : MonoBehaviour {
 
 	private void Start() {
 		isGameStarted = false;
-		speed = 0f;
-		maxSpeed = 1f;
-		// speedIncrement = 0.005f;
+		currentGameTime = 10f; //Starts in 10 as a offset of the speed
 		speedIncrement = 240f;
-		currentTime = 10f;
 		currentScore = 0f;
 		spawnTime = 0f;
+		maxSpeed = 1f;
+		speed = 0f;
 
 		_hud.SetScore((int)currentScore);
 		StartCoroutine(CountdownStart());
@@ -46,18 +47,19 @@ public class GameController : MonoBehaviour {
 	private void Update() {
 		if(!isGameStarted) return;
 		
-		if(currentTime < speedIncrement){
-			speed = currentTime / speedIncrement;
-			currentTime += Time.deltaTime;
+		//Speed calculations that will be use in all the game
+		if(currentGameTime < speedIncrement){
+			speed = currentGameTime / speedIncrement;
+			currentGameTime += Time.deltaTime;
 		}else{
-			speed = 1f;
+			speed = maxSpeed;
 		}
 
-		Debug.Log("Speed: " + speed);
-
+		//Make the score calculations
 		currentScore += 0.07f * speed;
 		_hud.SetScore(Mathf.FloorToInt(currentScore));
 		
+		//Spawn new objects using the rate and speed calculations
 		float spawnRate = Mathf.Lerp(2f, 0.3f, speed);
 		if(spawnTime <= 0){
 			_spawner.SpawnObject(speed);
@@ -70,12 +72,10 @@ public class GameController : MonoBehaviour {
 	#region Coroutines
 	private IEnumerator CountdownStart(){
 		// Establece la duración de la cuenta regresiva.
-        float countdownDuration = 3.0f;
+        float countdownDuration = 2.0f;
         
-        while (countdownDuration > 0)
-        {
-			Debug.Log("time: "+countdownDuration);
-            yield return new WaitForSeconds(1.0f); // Espera 1 segundo.
+        while (countdownDuration > 0) {
+            yield return new WaitForSeconds(1.0f);
             countdownDuration -= 1.0f;
         }
 
