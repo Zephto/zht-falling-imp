@@ -15,6 +15,7 @@ public class ObjectController : MonoBehaviour {
 
 	#region Public variables
 	public Type objectType;
+	public float speedGame = 0;
 	[SerializeField] private GameObject particles;
 	#endregion
 
@@ -22,6 +23,10 @@ public class ObjectController : MonoBehaviour {
 	private Camera mainCamera;
 	private float finalPosition;
 	private Tweener moveTween;
+	#endregion
+
+	#region Consts
+	private const float DefaultSpeed = 7f;
 	#endregion
 
 	private void Awake() {
@@ -33,7 +38,7 @@ public class ObjectController : MonoBehaviour {
 		//Obtain upper border of the screen
 		var errorRange = 5;
 
-		moveTween = this.transform.DOMoveY(finalPosition + errorRange, 5f).SetEase(Ease.InCubic).OnComplete(()=>{
+		moveTween = this.transform.DOMoveY(finalPosition + errorRange, DefaultSpeed - (speedGame*2)).SetEase(Ease.Linear).OnComplete(()=>{
 			this.gameObject.SetActive(false);
 		});
 	}

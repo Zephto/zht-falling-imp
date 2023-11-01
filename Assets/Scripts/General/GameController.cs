@@ -34,7 +34,8 @@ public class GameController : MonoBehaviour {
 	private void Start() {
 		isGameStarted = false;
 		currentGameTime = 10f; //Starts in 10 as a offset of the speed
-		speedIncrement = 240f;
+		// speedIncrement = 240f;
+		speedIncrement = 60f;
 		currentScore = 0f;
 		spawnTime = 0f;
 		maxSpeed = 1f;
@@ -60,7 +61,7 @@ public class GameController : MonoBehaviour {
 		_hud.SetScore(Mathf.FloorToInt(currentScore));
 		
 		//Spawn new objects using the rate and speed calculations
-		float spawnRate = Mathf.Lerp(2f, 0.3f, speed);
+		float spawnRate = Mathf.Lerp(2f, 0.8f, speed/2);
 		if(spawnTime <= 0){
 			_spawner.SpawnObject(speed);
 			spawnTime = spawnRate;

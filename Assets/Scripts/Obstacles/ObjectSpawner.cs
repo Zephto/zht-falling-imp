@@ -49,6 +49,7 @@ public class ObjectSpawner : MonoBehaviour {
         Vector3 spawnPosition = mainCamera.ViewportToWorldPoint(new Vector3(spawnX, 1, 0));
         spawnPosition.y = this.transform.position.y - errorRange;
         spawnPosition.z = 0;
+        ObjectController objectSelected = null;
 
         if(objects.Count > 10){
             //Pool existing objects
@@ -58,9 +59,7 @@ public class ObjectSpawner : MonoBehaviour {
                 var randomValue = Random.Range(0, inactiveObjects.Count);
                 var selection   = inactiveObjects[randomValue];
 
-                selection.transform.position = spawnPosition;
-                selection.SetActive(true);
-
+                objectSelected = selection.GetComponent<ObjectController>();
             }else{
                 Debug.LogError("There is no more active objects!!!");
             }
@@ -68,7 +67,14 @@ public class ObjectSpawner : MonoBehaviour {
         }else{
             //Create new objects
             GameObject obj = Instantiate(objectPrefab, spawnPosition, Quaternion.identity, this.transform);
+            objectSelected = obj.GetComponent<ObjectController>();
             objects.Add(obj);
+        }
+        
+        if(objectSelected != null){
+            objectSelected.transform.position = spawnPosition;
+            objectSelected.gameObject.SetActive(true);
+            objectSelected.speedGame = speed;
         }
 
     }
