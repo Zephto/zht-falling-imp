@@ -17,7 +17,7 @@ public class GameController : MonoBehaviour {
 	private float speed;
 	private float maxSpeed;
 	private float speedIncrement;
-	private int currentScore;
+	private float currentScore;
 	private bool isGameStarted;
 	#endregion
 
@@ -29,10 +29,10 @@ public class GameController : MonoBehaviour {
 		isGameStarted = false;
 		speed = 0f;
 		maxSpeed = 1f;
-		speedIncrement = 1.0f;
-		currentScore = 0;
+		speedIncrement = 1f;
+		currentScore = 0f;
 
-		_hud.SetScore(currentScore);
+		_hud.SetScore((int)currentScore);
 		StartCoroutine(CountdownStart());
 	}
 
@@ -40,11 +40,13 @@ public class GameController : MonoBehaviour {
 		if(!isGameStarted) return;
 
 		if(speed < maxSpeed){
-			speed += speedIncrement * Mathf.Pow(2, Time.time);
-
-			currentScore = Mathf.FloorToInt(speed);
-			_hud.SetScore(currentScore);
+			speed += speedIncrement * Time.deltaTime;
+		}else{
+			speed = maxSpeed;
 		}
+
+		currentScore += 0.1f * speed + Time.deltaTime;
+		_hud.SetScore(Mathf.FloorToInt(currentScore));
 	}
 
 	#region Coroutines
@@ -54,6 +56,7 @@ public class GameController : MonoBehaviour {
         
         while (countdownDuration > 0)
         {
+			Debug.Log("time: "+countdownDuration);
             yield return new WaitForSeconds(1.0f); // Espera 1 segundo.
             countdownDuration -= 1.0f;
         }
