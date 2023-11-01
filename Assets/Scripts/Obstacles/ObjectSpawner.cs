@@ -28,18 +28,18 @@ public class ObjectSpawner : MonoBehaviour {
         this.transform.position = worldPosition;
     }
 
-    private void Update() {
-        if(!canSpawn) return;
+    // private void Update() {
+    //     if(!canSpawn) return;
 
-        timer -= Time.deltaTime;
-        if (timer <= 0)
-        {
-            SpawnObject();
-            timer = spawnInterval;
-        }
-    }
+    //     timer -= Time.deltaTime;
+    //     if (timer <= 0)
+    //     {
+    //         SpawnObject();
+    //         timer = spawnInterval;
+    //     }
+    // }
 
-    private void SpawnObject() {
+    public void SpawnObject(float speed) {
         var spawnX      = Random.Range(0.2f, 0.8f); // Rango de 0 a 1 en coordenadas de pantalla
         var errorRange  = 5;
 
@@ -68,12 +68,6 @@ public class ObjectSpawner : MonoBehaviour {
             objects.Add(obj);
         }
 
-    }
-
-	// Función pública para ajustar la velocidad de generación
-    public void SetSpawnInterval(float newInterval)
-    {
-        spawnInterval = newInterval;
     }
 }
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -18,19 +19,25 @@ public class GameController : MonoBehaviour {
 	private float maxSpeed;
 	private float speedIncrement;
 	private float currentScore;
+	private float spawnTime;
+	private float currentTime;
 	private bool isGameStarted;
 	#endregion
 
 	private void Awake() {
-		_hud = GameObject.FindObjectOfType<GameplayHud>();
+		_hud 		= GameObject.FindObjectOfType<GameplayHud>();
+		_spawner 	= GameObject.FindObjectOfType<ObjectSpawner>();
 	}
 
 	private void Start() {
 		isGameStarted = false;
 		speed = 0f;
 		maxSpeed = 1f;
-		speedIncrement = 1f;
+		// speedIncrement = 0.005f;
+		speedIncrement = 240f;
+		currentTime = 10f;
 		currentScore = 0f;
+		spawnTime = 0f;
 
 		_hud.SetScore((int)currentScore);
 		StartCoroutine(CountdownStart());
@@ -38,15 +45,26 @@ public class GameController : MonoBehaviour {
 
 	private void Update() {
 		if(!isGameStarted) return;
-
-		if(speed < maxSpeed){
-			speed += speedIncrement * Time.deltaTime;
+		
+		if(currentTime < speedIncrement){
+			speed = currentTime / speedIncrement;
+			currentTime += Time.deltaTime;
 		}else{
-			speed = maxSpeed;
+			speed = 1f;
 		}
 
-		currentScore += 0.1f * speed + Time.deltaTime;
+		Debug.Log("Speed: " + speed);
+
+		currentScore += 0.07f * speed;
 		_hud.SetScore(Mathf.FloorToInt(currentScore));
+		
+		float spawnRate = Mathf.Lerp(2f, 0.3f, speed);
+		if(spawnTime <= 0){
+			_spawner.SpawnObject(speed);
+			spawnTime = spawnRate;
+		}else{
+			spawnTime -= Time.deltaTime;
+		}
 	}
 
 	#region Coroutines
