@@ -301,19 +301,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectsReferences:
-  - hellId: Cuadrado
+  - hellId: Item
     hellType: 4
     hellObject: {fileID: 6303698336067790557}
     hellParticles: {fileID: 0}
-  - hellId: 
+  - hellId: Moneda
+    hellType: 2
+    hellObject: {fileID: 0}
+    hellParticles: {fileID: 0}
+  - hellId: Obstaculo
     hellType: 0
     hellObject: {fileID: 0}
     hellParticles: {fileID: 0}
-  - hellId: 
-    hellType: 0
+  - hellId: Monstruo
+    hellType: 1
     hellObject: {fileID: 0}
     hellParticles: {fileID: 0}
-  particles: {fileID: 1046572768997704748, guid: 820a5436a1189754284aade5a73ebfb9, type: 3}
   speedGame: 0
 --- !u!61 &1407524948292199667
 BoxCollider2D:

@@ -4,6 +4,7 @@ using DG.Tweening;
 using UnityEngine;
 using MyBox;
 using System;
+using UnityEditor;
 
 /// <summary>
 /// Component used to control all the spawned object parameters
@@ -23,7 +24,6 @@ public class ObjectController : MonoBehaviour {
 
 	#region Public variables
 	public List<HellObjectReferences> objectsReferences;
-	[SerializeField] private GameObject particles;
 	[HideInInspector] public float speedGame = 0;
 	#endregion
 
@@ -63,14 +63,24 @@ public class ObjectController : MonoBehaviour {
 	}
 
 	private void OnTriggerEnter2D(Collider2D other) {
-		Instantiate(particles, this.transform.position, Quaternion.identity, this.transform.parent);
 		moveTween.Kill();
+		if(currentSelection.hellParticles != null){
+			Instantiate(currentSelection.hellParticles, 
+				this.transform.position, Quaternion.identity, 
+				this.transform.parent);
+		}
+
 		this.gameObject.SetActive(false);
 	}
 	#endregion
 
 	#region Private Methods
 	private void SelectRandomType(){
+		if(objectsReferences.Count <= 0){
+			Debug.LogWarning("There is no elements in objects references");
+			return;
+		}
+		
 		//En esta parte se puede jugar con las probabilidades, pero ya despues
 		var randomIndex = new System.Random().Next(objectsReferences.Count);
 		currentSelection = objectsReferences[randomIndex];
