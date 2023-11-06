@@ -304,19 +304,19 @@ MonoBehaviour:
   - hellId: Item
     hellType: 4
     hellObject: {fileID: 6303698336067790557}
-    hellParticles: {fileID: 0}
+    hellParticles: {fileID: 1046572768997704738, guid: 820a5436a1189754284aade5a73ebfb9, type: 3}
   - hellId: Moneda
     hellType: 2
-    hellObject: {fileID: 0}
-    hellParticles: {fileID: 0}
+    hellObject: {fileID: 3943545531515103722}
+    hellParticles: {fileID: 1046572768997704738, guid: 820a5436a1189754284aade5a73ebfb9, type: 3}
   - hellId: Obstaculo
     hellType: 0
-    hellObject: {fileID: 0}
-    hellParticles: {fileID: 0}
+    hellObject: {fileID: 3936701772181476933}
+    hellParticles: {fileID: 1046572768997704738, guid: 4112f1c2a4d226146887c09973c0958a, type: 3}
   - hellId: Monstruo
     hellType: 1
-    hellObject: {fileID: 0}
-    hellParticles: {fileID: 0}
+    hellObject: {fileID: 3936701772181476933}
+    hellParticles: {fileID: 1046572768997704738, guid: 4112f1c2a4d226146887c09973c0958a, type: 3}
   speedGame: 0
 --- !u!61 &1407524948292199667
 BoxCollider2D:
