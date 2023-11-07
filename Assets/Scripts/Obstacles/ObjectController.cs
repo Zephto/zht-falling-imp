@@ -20,6 +20,7 @@ public class ObjectController : MonoBehaviour {
 		public Type hellType;
 		public GameObject hellObject;
 		public ParticleSystem hellParticles;
+		[Range(0, 100)] public int probability;
 	}
 
 	#region Public variables
@@ -35,7 +36,7 @@ public class ObjectController : MonoBehaviour {
 	#endregion
 
 	#region Consts
-	private const float DefaultSpeed = 7f;
+	private const float DefaultSpeed = 6f;
 	private const float MonsterSpeed = 5f;
 	private const float ErrorRange = 5f;
 	#endregion
@@ -81,10 +82,23 @@ public class ObjectController : MonoBehaviour {
 			return;
 		}
 		
-		//En esta parte se puede jugar con las probabilidades, pero ya despues
-		var randomIndex = new System.Random().Next(objectsReferences.Count);
-		currentSelection = objectsReferences[randomIndex];
-		currentSelection.hellObject.SetActive(true);
+		//Turn off all hell objects
+		objectsReferences.ForEach(obj => obj.hellObject.SetActive(false));
+
+		GameObject RandomFinder(){
+			//En esta parte se puede jugar con las probabilidades, pero ya despues
+			var randomIndex = new System.Random().Next(objectsReferences.Count);
+			currentSelection = objectsReferences[randomIndex];
+			// currentSelection.hellObject.SetActive(true);
+
+			if(UnityEngine.Random.Range(0, 100) <= currentSelection.probability){
+				return currentSelection.hellObject;
+			}else{
+				return RandomFinder();
+			}
+		}
+
+		RandomFinder().SetActive(true);
 	}
 	#endregion
 
