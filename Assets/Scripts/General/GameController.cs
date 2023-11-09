@@ -57,8 +57,9 @@ public class GameController : MonoBehaviour {
 		}
 
 		//Make the score calculations
-		currentScore += 0.07f * speed;
+		currentScore += 10f * speed * Time.deltaTime;
 		_hud.SetScore(Mathf.FloorToInt(currentScore));
+		Debug.Log(currentScore);
 		
 		//Spawn new objects using the rate and speed calculations
 		float spawnRate = Mathf.Lerp(2f, 0.8f, speed/2);

@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour {
 		if (Application.isMobilePlatform)
 		{
 			// Mueve al jugador usando el acelerómetro
-			moveHorizontal = Input.acceleration.x;
+			moveHorizontal = Input.acceleration.x * 2f;
 		}
 		else
 		{
