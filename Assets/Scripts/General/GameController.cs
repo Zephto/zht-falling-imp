@@ -61,6 +61,7 @@ public class GameController : MonoBehaviour {
 		_hud.SetScore(Mathf.FloorToInt(currentScore));
 		Debug.Log(currentScore);
 		
+		//TODO - Es probable que esto tambien necesite hacerse un Deltatime
 		//Spawn new objects using the rate and speed calculations
 		float spawnRate = Mathf.Lerp(2f, 0.8f, speed/2);
 		if(spawnTime <= 0){
